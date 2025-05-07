@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Туризм: Топ країн</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      margin: 20px auto;
+      width: 50%;
+      font-family: Arial, sans-serif;
+    }
+    th, td {
+      border: 1px solid #888;
+      padding: 10px 15px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    h2 {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h2>Країни з найбільшою кількістю туристів</h2>
+  <div id="table-container"></div>
+
+  <script>
+    fetch('tourism.json')
+      .then(response => response.text())
+      .then(jsonText => {
+        const data = JSON.parse(jsonText);
+        const table = document.createElement('table');
+
+        // Створення заголовків
+        const headerRow = table.insertRow();
+        const headers = ["Країна", "Кількість туристів (млн)"];
+        headers.forEach(headerText => {
+          const th = document.createElement('th');
+          th.textContent = headerText;
+          headerRow.appendChild(th);
+        });
+
+        // Заповнення рядків таблиці
+        data.forEach(item => {
+          const row = table.insertRow();
+          const countryCell = row.insertCell();
+          countryCell.textContent = item.country;
+
+          const visitorsCell = row.insertCell();
+          visitorsCell.textContent = item.visitors_mln;
+        });
+
+        document.getElementById('table-container').appendChild(table);
+      })
+      .catch(error => console.error('Помилка при завантаженні даних:', error));
+  </script>
+</body>
+</html>

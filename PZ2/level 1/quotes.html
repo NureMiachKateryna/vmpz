@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Цитата дня</title>
+</head>
+<body>
+  <h1>Цитата дня</h1>
+  <p id="quote"></p>
+  <p id="author"></p>
+
+  
+  <script>
+    fetch('quotes.json')
+      .then(response => response.text()) // Отримуємо як текст
+      .then(jsonText => {
+        const data = JSON.parse(jsonText); // Розбираємо JSON 
+
+        // Випадкова цитата
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const quote = data[randomIndex];
+
+        // Вивід на сторінку
+        document.getElementById('quote').textContent = `"${quote.text}"`;
+        document.getElementById('author').textContent = `– ${quote.author}`;
+      })
+      .catch(error => console.error('Помилка при завантаженні цитат:', error));
+  </script>
+</body>
+</html>

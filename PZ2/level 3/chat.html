@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Чат з JSON та localStorage</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f7f9;
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
+    }
+
+    #chat-container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px 25px;
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    select, input {
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    select {
+      width: 100%;
+    }
+
+    #messages {
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #fdfdfd;
+    }
+
+    .message {
+      padding: 6px 8px;
+      background-color: #e3f2fd;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    #username, #message-input {
+      width: 47%;
+      margin-right: 3%;
+    }
+
+    #message-input {
+      margin-right: 0;
+    }
+
+    button {
+      margin-top: 10px;
+      width: 100%;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1976d2;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <h2>💬 Студентський чат</h2>
+
+    <label for="room-select">Оберіть кімнату:</label>
+    <select id="room-select">
+      <option value="Допомога з ДЗ">Допомога з ДЗ</option>
+      <option value="Обговорення пар">Обговорення пар</option>
+      <option value="Курсові і проєкти">Курсові і проєкти</option>
+    </select>
+
+    <div id="messages"></div>
+
+    <input type="text" id="username" placeholder="Ім’я" />
+    <input type="text" id="message-input" placeholder="Повідомлення..." />
+    <button onclick="sendMessage()">Надіслати</button>
+  </div>
+
+  <script>
+    const defaultRooms = {
+      "Допомога з ДЗ": [],
+      "Обговорення пар": [],
+      "Курсові і проєкти": []
+    };
+
+    // Завантаження з localStorage або встановлення початкових значень
+    let messagesByRoom = JSON.parse(localStorage.getItem("chatData")) || defaultRooms;
+
+    const messageInput = document.getElementById("message-input");
+    const messagesDiv = document.getElementById("messages");
+    const roomSelect = document.getElementById("room-select");
+    const usernameInput = document.getElementById("username");
+
+    function renderMessages() {
+      const room = roomSelect.value;
+      messagesDiv.innerHTML = '';
+      const roomMessages = messagesByRoom[room] || [];
+
+      roomMessages.forEach(msg => {
+        const div = document.createElement("div");
+        div.className = "message";
+        div.textContent = `${msg.user}: ${msg.text}`;
+        messagesDiv.appendChild(div);
+      });
+
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function sendMessage() {
+      const room = roomSelect.value;
+      const text = messageInput.value.trim();
+      const user = usernameInput.value.trim() || "Анонім";
+
+      if (text !== "") {
+        const message = { user, text };
+        messagesByRoom[room].push(message);
+
+        // Зберігаємо оновлений об'єкт у localStorage як JSON
+        localStorage.setItem("chatData", JSON.stringify(messagesByRoom));
+
+        messageInput.value = "";
+        renderMessages();
+      }
+    }
+
+    // Рендер при перемиканні кімнати
+    roomSelect.addEventListener("change", renderMessages);
+
+    // Автоматичний рендер після завантаження сторінки
+    window.addEventListener("load", renderMessages);
+  </script>
+</body>
+</html>
