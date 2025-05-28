@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Список категорій</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 40px;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 32px;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        li {
+            background: white;
+            margin-bottom: 10px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .category-name {
+            font-weight: bold;
+        }
+
+        .article-count {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Список категорій</h1>
+
+    <nav>
+        <a href="/">🏠 Головна</a>
+    </nav>
+
+    <ul>
+        {% for category in categories %}
+            <li>
+                <span class="category-name">{{ category.name }}</span>
+                <span class="article-count">{{ category.article_count }} {{ category.article_count|pluralize:"стаття,статті,статей" }}</span>
+            </li>
+        {% empty %}
+            <li>Категорій поки немає.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

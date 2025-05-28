@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна сторінка</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 40px;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 32px;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #337ab7;
+            font-weight: bold;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        input, select, button {
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        li {
+            background: white;
+            margin-bottom: 12px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .article-title {
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .meta {
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Головна сторінка</h1>
+
+    <nav>
+        <a href="/">🏠 Головна</a>
+        <a href="/categories/">📚 Категорії</a>
+    </nav>
+
+    <form method="get">
+        Період з:
+        <input type="date" name="date_from" value="{{ request.GET.date_from }}">
+        по:
+        <input type="date" name="date_to" value="{{ request.GET.date_to }}">
+
+        <select name="sort">
+            <option value="date" {% if request.GET.sort == "date" %}selected{% endif %}>Сортувати за датою</option>
+            <option value="comments" {% if request.GET.sort == "comments" %}selected{% endif %}>Сортувати за кількістю коментарів</option>
+        </select>
+
+        <button type="submit">🔍 Показати</button>
+    </form>
+
+    <ul>
+    {% for article in articles %}
+        <li style="background: white; margin-bottom: 10px; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 18px;">
+        <strong>{{ article.title }}</strong><br>
+        🗓 {{ article.created_at|date:"d.m.Y" }} |
+        💬 {{ article.comments.count }} коментарів
+        </li>
+    {% empty %}
+        <li>Немає статей за вибраними параметрами.</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
