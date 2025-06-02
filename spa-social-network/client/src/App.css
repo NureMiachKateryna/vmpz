@@ -1,0 +1,160 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff6f4;
+  color: #333;
+}
+
+.container {
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #ff6f61;
+}
+
+.main {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  gap: 40px;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #ffe4e1;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.sidebar button {
+  background-color: #ffb6b3;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar button:hover {
+  background-color: #ff9c98;
+}
+
+.sidebar .active {
+  background-color: #ff6f61;
+}
+
+.content {
+  flex: 1;
+  background-color: #fff;
+  border: 2px dashed #ffb6b3;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.content h2 span {
+  color: #ff6f61;
+}
+
+.content ul {
+  list-style: square;
+  padding-left: 20px;
+}
+
+.hint {
+  font-style: italic;
+  color: #888;
+}
+
+/* Стилі для нового поста */
+.new-post {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.new-post textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: none;
+  font-family: inherit;
+}
+
+.new-post button {
+  align-self: flex-start;
+  background-color: #ff6f61;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.new-post button:hover {
+  background-color: #e2594c;
+}
+
+/* Стилі для коментарів */
+.comments {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.comments ul {
+  padding-left: 15px;
+  list-style: none;
+}
+
+.comments li {
+  margin-bottom: 5px;
+}
+
+/* Стилі для блоку додавання коментаря */
+.new-comment {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.new-comment select,
+.new-comment input {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+}
+
+.new-comment input {
+  flex: 1;
+  min-width: 160px;
+}
+
+.new-comment button {
+  background-color: #ffb6b3;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.new-comment button:hover {
+  background-color: #ff9c98;
+}
+
+/* Прибрати крапки перед друзями та кнопками */
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
